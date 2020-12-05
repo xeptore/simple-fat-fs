@@ -1,29 +1,29 @@
 cmake_minimum_required(VERSION 3.19)
 
 # sets compiler
-SET(CMAKE_C_COMPILER /usr/bin/clang-11)
+SET (CMAKE_C_COMPILER /usr/bin/clang-11)
 
 # debugging build configuration
 set (CMAKE_BUILD_TYPE Debug)
 
-project(simple-fat)
-add_executable (simple-fat main.c constants.h)
+project (simple-fat)
+add_executable (simple-fat main.c src/constants.h)
 
 include_directories (handlers)
-include_directories(${PROJECT_SOURCE_DIR})
+include_directories (src)
 
-# adds libraries
-add_library (directory directory.h directory.c)
+# adds libraries as the units of compilation
+add_library (directory src/directory.h src/directory.c)
 target_link_libraries (simple-fat directory)
 
-add_library (handlers handlers.h handlers/save_new_file.c)
+add_library (handlers src/handlers.h handlers/save_new_file.c)
 target_link_libraries (simple-fat handlers)
 
-add_library (fat fat.h fat.c)
+add_library (fat src/fat.h src/fat.c)
 target_link_libraries (simple-fat fat)
 
-add_library (formatter formatter.h formatter.c)
+add_library (formatter src/formatter.h src/formatter.c)
 target_link_libraries (simple-fat formatter)
 
-add_library (logger logger.h logger.c)
+add_library (logger src/logger.h src/logger.c)
 target_link_libraries (simple-fat logger)

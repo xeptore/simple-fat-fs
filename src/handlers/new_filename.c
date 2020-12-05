@@ -2,17 +2,18 @@
 #include "directory.h"
 #include "fat.h"
 #include "logger.h"
+#include <stdio.h>
 
 void get_filename(char *output) {
   printf(
     "Enter filename (%d-characters long, including extension): ",
     MAX_FILENAME_LENGTH
   );
-  scanf("%s", output);
-  // FIXME: what if user entered filename more than 11 characters?
+  char line[MAX_FILENAME_LENGTH] = {0};
+  scanf("%[^\n]", line);
 }
 
-int exec_save_filename(DirectoryFile *directory, FatTableEntry *fat_table) {
+int handle_new_filename(DirectoryFile *directory, FatTableEntry *fat_table) {
   if (directory_is_full(directory)) {
     fatal("Directory does not have any space to store new file.");
     return 2;

@@ -1,0 +1,11 @@
+{
+  "C_Cpp.errorSquiggles": "Disabled",
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "files.associations": {
+    "string_view": "c",
+    "tuple": "c",
+    "*.tcc": "cpp",
+    "iomanip": "cpp",
+    "*.inc": "cpp"
+  }
+}

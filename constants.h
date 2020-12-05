@@ -1,3 +1,4 @@
+#pragma once
 #include <stdbool.h>
 
 #define BLOCK_SIZE_IN_BYTES 1024

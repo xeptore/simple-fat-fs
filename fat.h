@@ -1,6 +1,6 @@
+#pragma once
 #include <stdbool.h>
 
-// TODO: recheck fat table array type size
 typedef int FatTableEntry;
 
 // Loads FAT table from partition file on disk into `fat_table`.

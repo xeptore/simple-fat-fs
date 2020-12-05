@@ -9,14 +9,13 @@ set (CMAKE_BUILD_TYPE Debug)
 project (simple-fat)
 add_executable (simple-fat main.c src/constants.h)
 
-include_directories (handlers)
 include_directories (src)
 
 # adds libraries as the units of compilation
 add_library (directory src/directory.h src/directory.c)
 target_link_libraries (simple-fat directory)
 
-add_library (handlers src/handlers.h handlers/save_new_file.c)
+add_library (handlers src/handlers.h src/handlers/save_new_file.c)
 target_link_libraries (simple-fat handlers)
 
 add_library (fat src/fat.h src/fat.c)

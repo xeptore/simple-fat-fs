@@ -1,19 +1,36 @@
 #include "fat.h"
 #include "constants.h"
+#include "logger.h"
 #include <stdio.h>
 
-void deserialize_fat_table(char *serialized, FatTableEntry *fat_table) {
-  // TODO: deserialize and map it to `fat_table`.
+FatTableEntry deserialize_fat_entry(const unsigned char* serialized_entry) {
+  return ((serialized_entry[0] << 0)) +
+         ((serialized_entry[1] << 8)) +
+         ((serialized_entry[2] << 16));
 }
 
-void serialize_fat_table(const FatTableEntry *fat_table, char *output) {
-  // TODO: serialize and map it to `output`.
+void deserialize_fat_table(unsigned char *serialized, FatTableEntry *fat_table) {
+  for (size_t i = 0; i < FAT_ENTRIES; i++)  {
+    fat_table[i] = deserialize_fat_entry(&serialized[i * 3]);
+  }
+}
+
+void serialize_fat_entry(const FatTableEntry entry, unsigned char* output) {
+  output[0] = (entry >> 0) % 256;
+  output[1] = (entry >> 8) % 256;
+  output[2] = (entry >> 16) % 256;
+}
+
+void serialize_fat_table(const FatTableEntry *fat_table, unsigned char *output) {
+  for (size_t i = 0; i < FAT_ENTRIES; i++)  {
+    serialize_fat_entry(fat_table[i], &output[3 * i]);
+  }
 }
 
 void load_fat_table(FatTableEntry *fat_table) {
   FILE *fp = fopen(PARTITION_FILENAME, "rb");
   char buffer[FAT_ENTRIES] = {0};
-  fread(fat_table, sizeof buffer, 1, fp);
+  fread(buffer, sizeof buffer, 1, fp);
   fclose(fp);
   deserialize_fat_table(buffer, fat_table);
 }

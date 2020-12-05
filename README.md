@@ -1,2 +1,3 @@
-# simple-fat-fs
-Simple FAT File System Implementation
+# Simple FAT FS
+
+Simple FAT File System Implementation.

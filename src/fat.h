@@ -1,14 +1,13 @@
 #pragma once
 #include <stdbool.h>
+#include "logger.h"
 
 typedef int FatTableEntry;
 
 // Loads FAT table from partition file on disk into `fat_table`.
 void load_fat_table(FatTableEntry *fat_table);
 
-/**
- * Persists fat table onto partition on disk.
- */
+// Persists fat table onto partition on disk.
 void persist_fat_table(const FatTableEntry *fat_table);
 
 // Appplies `empty_entires` chain to `fat_table`.

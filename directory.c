@@ -6,9 +6,9 @@ DirectoryFile deserialize_directory_file(
   const char *serialized_directory_file
 ) {
   DirectoryFile directory = {
-      .capacity = 32,
-      .directory_entry = NULL,
-      .length = 0,
+    .capacity = 32,
+    .directory_entry = NULL,
+    .length = 0,
   };
   return directory;
 }

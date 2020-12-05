@@ -15,7 +15,7 @@ include_directories (src)
 add_library (directory src/directory.h src/directory.c)
 target_link_libraries (simple-fat directory)
 
-add_library (handlers src/handlers.h src/handlers/save_new_file.c)
+add_library (handlers src/handlers.h src/handlers/new_filename.c)
 target_link_libraries (simple-fat handlers)
 
 add_library (fat src/fat.h src/fat.c)

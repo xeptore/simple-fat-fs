@@ -1,21 +1,30 @@
 #pragma once
 #include <stdio.h>
 #include "constants.h"
+#include "fat.h"
 
 typedef struct
 {
   char *filename;
-  int first_fat_table_record;
+  FatTableEntry first_fat_table_record;
 } DirectoryEntry;
 
 typedef struct
 {
-  size_t capacity;
-  size_t length;
+  short int capacity;
+  short int length;
   DirectoryEntry *directory_entry;
 } DirectoryFile;
 
 DirectoryFile load_directory_file();
+
+void serialize_directory_file(const DirectoryFile *directory, unsigned char *output);
+
+void serialize_directory_entry(const DirectoryEntry *entry, unsigned char *output);
+
+DirectoryEntry deserialize_directory_entry(const unsigned char *serialized_directory_file);
+
+DirectoryFile deserialize_directory_file(const unsigned char *serialized_directory_file);
 
 void persist_directory(const DirectoryFile *directory);
 

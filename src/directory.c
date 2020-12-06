@@ -7,7 +7,7 @@ DirectoryFile deserialize_directory_file(
 ) {
   DirectoryFile directory = {
     .capacity = 32,
-    .directory_entry = NULL,
+    .directory_entries = NULL,
     .length = 0,
   };
   return directory;
@@ -76,9 +76,9 @@ void persist_directory(const DirectoryFile *directory) {
 
 void insert_directory_entry(
   DirectoryFile *directory_file,
-  const DirectoryEntry *directory_entry
+  const DirectoryEntry *directory_entries
 ) {
-  directory_file->directory_entry[directory_file->length++] = *directory_entry;
+  directory_file->directory_entries[directory_file->length++] = *directory_entries;
 }
 
 bool directory_is_full(const DirectoryFile *directory_file) {
@@ -90,7 +90,7 @@ bool filename_exists_in_directory(
   const char *filename
 ) {
   for (size_t i = 0; i < ROOT_DIRECTORY_MAX_FILES; i++) {
-    if (directory->directory_entry[i].filename == filename) {
+    if (directory->directory_entries[i].filename == filename) {
       return true;
     }
   }

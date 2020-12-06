@@ -13,7 +13,7 @@ typedef struct
 {
   short int capacity;
   short int length;
-  DirectoryEntry *directory_entry;
+  DirectoryEntry *directory_entries;
 } DirectoryFile;
 
 DirectoryFile load_directory_file();
@@ -30,7 +30,7 @@ void persist_directory(const DirectoryFile *directory);
 
 void insert_directory_entry(
   DirectoryFile *directory_file,
-  const DirectoryEntry *directory_entry
+  const DirectoryEntry *directory_entries
 );
 
 bool directory_is_full(const DirectoryFile *directory_file);

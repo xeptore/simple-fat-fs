@@ -32,11 +32,11 @@ int handle_new_filename(DirectoryFile *directory, FatTableEntry *fat_table) {
     return 1;
   }
   update_fat_entires(fat_table, empty_entries);
-  const DirectoryEntry directory_entry = {
+  const DirectoryEntry directory_entries = {
     .filename = filename,
     .first_fat_table_record = empty_entries[0]
   };
-  insert_directory_entry(directory, &directory_entry);
+  insert_directory_entry(directory, &directory_entries);
   persist_directory(directory);
   persist_fat_table(fat_table);
 

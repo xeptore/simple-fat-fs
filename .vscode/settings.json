@@ -11,11 +11,18 @@
   "C_Cpp.clang_format_style": "file",
   "C_Cpp.clang_format_sortIncludes": true,
   "C_Cpp.vcFormat.wrap.preserveBlocks": "oneLiners",
-  "C_Cpp.formatting": "clangFormat",
+  "C_Cpp.formatting": "vcFormat",
+  "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
     "source.organizeImports": true
   },
   "cmake.clearOutputBeforeBuild": true,
-  "cmake.saveBeforeBuild": true
+  "cmake.saveBeforeBuild": true,
+  "triggerTaskOnSave.tasks": {
+    "build": [
+      "src/*.h",
+      "src/*.c"
+    ]
+  }
 }

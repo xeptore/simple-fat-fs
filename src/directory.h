@@ -11,8 +11,8 @@ typedef struct
 
 typedef struct
 {
-  short int capacity;
-  short int length;
+  unsigned char capacity;
+  unsigned char length;
   DirectoryEntry directory_entries[ROOT_DIRECTORY_MAX_FILES];
 } DirectoryFile;
 

@@ -39,16 +39,14 @@ void serialize_directory_file(
   unsigned char int_serialization_buffer[] = INITIALIZE(3, 0);
   serialize_fat_entry(directory->capacity, int_serialization_buffer);
   output[0] = int_serialization_buffer[0];
-  output[1] = int_serialization_buffer[1];
 
   serialize_fat_entry(directory->length, int_serialization_buffer);
-  output[2] = int_serialization_buffer[0];
-  output[3] = int_serialization_buffer[1];
+  output[1] = int_serialization_buffer[0];
 
   for (size_t i = 0; i < directory->length; i++) {
     serialize_directory_entry(
       &directory->directory_entries[i],
-      &output[4 + (i * DIRECTORY_ENTRY_SIZE_IN_BYTES)]
+      &output[2 + (i * DIRECTORY_ENTRY_SIZE_IN_BYTES)]
     );
   }
 }

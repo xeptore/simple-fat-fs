@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "build and debug",
+      "name": "simple-fat",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceRoot}/build/simple-fat",
@@ -23,7 +23,7 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
-      "name": "Test - fat",
+      "name": "_test_fat",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceRoot}/build/_test_fat",
@@ -44,7 +44,7 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
-      "name": "Test - directory",
+      "name": "_test_directory",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceRoot}/build/_test_directory",

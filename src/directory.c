@@ -13,6 +13,22 @@ DirectoryFile deserialize_directory_file(
   return directory;
 }
 
+DirectoryEntry deserialize_directory_entry(
+  const unsigned char *serialized_directory_file
+) {
+  const unsigned char fat_entry_buffer[3] = {
+    serialized_directory_file[DIRECTORY_ENTRY_SIZE_IN_BYTES - 3],
+    serialized_directory_file[DIRECTORY_ENTRY_SIZE_IN_BYTES - 2],
+    serialized_directory_file[DIRECTORY_ENTRY_SIZE_IN_BYTES - 1],
+  };
+  const FatTableEntry fat_table_entry = deserialize_fat_entry(fat_entry_buffer);
+
+  DirectoryEntry entry = {
+    .first_fat_table_record = fat_table_entry
+  };
+  strcpy(entry.filename, (char *)serialized_directory_file);
+  return entry;
+}
 
 void serialize_directory_entry(
   const DirectoryEntry *entry,

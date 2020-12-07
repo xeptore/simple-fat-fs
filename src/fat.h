@@ -4,6 +4,10 @@
 
 typedef int FatTableEntry;
 
+void serialize_fat_entry(const FatTableEntry entry, unsigned char* output);
+
+FatTableEntry deserialize_fat_entry(const unsigned char* serialized_entry);
+
 // Loads FAT table from partition file on disk into `fat_table`.
 void load_fat_table(FatTableEntry *fat_table);
 

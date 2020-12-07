@@ -29,7 +29,7 @@ void serialize_fat_table(const FatTableEntry *fat_table, unsigned char *output) 
 
 void load_fat_table(FatTableEntry *fat_table) {
   FILE *fp = fopen(PARTITION_FILENAME, "rb");
-  char buffer[FAT_ENTRIES] = {0};
+  unsigned char buffer[FAT_ENTRIES] = {0};
   fread(buffer, sizeof buffer, 1, fp);
   fclose(fp);
   deserialize_fat_table(buffer, fat_table);
@@ -37,7 +37,7 @@ void load_fat_table(FatTableEntry *fat_table) {
 
 void persist_fat_table(const FatTableEntry *fat_table) {
   FILE *fp = fopen(PARTITION_FILENAME, "wb+");
-  char buffer[FAT_ENTRIES] = {0};
+  unsigned char buffer[FAT_ENTRIES] = {0};
   serialize_fat_table(fat_table, buffer);
   fwrite(buffer, sizeof buffer, 1, fp);
   fclose(fp);

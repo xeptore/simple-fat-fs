@@ -1,11 +1,29 @@
 {
   "C_Cpp.errorSquiggles": "Disabled",
-  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
   "files.associations": {
     "string_view": "c",
     "tuple": "c",
     "*.tcc": "cpp",
     "iomanip": "cpp",
     "*.inc": "cpp"
+  },
+  "C_Cpp.autocomplete": "Default",
+  "C_Cpp.clang_format_style": "file",
+  "C_Cpp.clang_format_sortIncludes": true,
+  "C_Cpp.vcFormat.wrap.preserveBlocks": "oneLiners",
+  "C_Cpp.formatting": "vcFormat",
+  "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
+  "cmake.clearOutputBeforeBuild": true,
+  "cmake.saveBeforeBuild": true,
+  "triggerTaskOnSave.tasks": {
+    "build": [
+      "src/**/*.h",
+      "src/**/*.c",
+      "main.c"
+    ]
   }
 }

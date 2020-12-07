@@ -7,9 +7,17 @@ SET (CMAKE_C_COMPILER /usr/bin/clang-11)
 set (CMAKE_BUILD_TYPE Debug)
 
 project (simple-fat)
-add_executable (simple-fat main.c src/constants.h)
+add_executable (simple-fat main.c src/constants.h src/macros.h)
 
 include_directories (src)
+
+# add fat library test executable
+add_executable (_test_fat src/fat_test.c)
+target_link_libraries (_test_fat fat -lcunit)
+
+# add directory library test executable
+add_executable (_test_directory src/directory_test.c)
+target_link_libraries (_test_directory directory fat -lcunit)
 
 # adds libraries as the units of compilation
 add_library (directory src/directory.h src/directory.c)

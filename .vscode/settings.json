@@ -21,8 +21,9 @@
   "cmake.saveBeforeBuild": true,
   "triggerTaskOnSave.tasks": {
     "build": [
-      "src/*.h",
-      "src/*.c"
+      "src/**/*.h",
+      "src/**/*.c",
+      "main.c"
     ]
   }
 }

@@ -18,16 +18,7 @@ void serialize_directory_entry(
   const DirectoryEntry *entry,
   unsigned char *output
 ) {
-  char filename_buffer[] = INITIALIZE(MAX_FILENAME_LENGTH, ' ');
-
-  size_t i = 0;
-  while (entry->filename[i] != '\0') {
-    output[i] = entry->filename[i];
-    i++;
-  }
-  for (; i < MAX_FILENAME_LENGTH; i++) {
-    output[i] = filename_buffer[i];
-  }
+  strcpy((char *)output, entry->filename);
 
   unsigned char fat_table_entry_buffer[] = INITIALIZE(3, 0);
   serialize_fat_entry(entry->first_fat_table_record, fat_table_entry_buffer);

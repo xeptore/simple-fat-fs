@@ -249,6 +249,104 @@ void test__serialize_directory_file_3() {
   }
 }
 
+void test__deserialize_directory_entry_1() {
+  unsigned char serialized_entry[] = INITIALIZE(DIRECTORY_ENTRY_SIZE_IN_BYTES, 'X');
+  serialized_entry[0] = 'i';
+  serialized_entry[1] = 'm';
+  serialized_entry[2] = 'a';
+  serialized_entry[3] = 'g';
+  serialized_entry[4] = 'e';
+  serialized_entry[5] = '.';
+  serialized_entry[6] = 'p';
+  serialized_entry[7] = 'n';
+  serialized_entry[8] = 'g';
+  serialized_entry[9] = '\000';
+  serialized_entry[10] =  '\000';
+  serialized_entry[11] =  '\000';
+  serialized_entry[12] =  '\000';
+  serialized_entry[13] =  '\000';
+  serialized_entry[14] =  '\000';
+  serialized_entry[15] =  '\000';
+  serialized_entry[16] =  '\000';
+  serialized_entry[17] =  '\000';
+  serialized_entry[18] =  '\000';
+  serialized_entry[19] =  '\000';
+  serialized_entry[20] =  '\000';
+  serialized_entry[21] =  8;
+  serialized_entry[22] =  26;
+  serialized_entry[23] =  7;
+
+  const DirectoryEntry entry = deserialize_directory_entry(serialized_entry);
+  CU_ASSERT_STRING_EQUAL(entry.filename, "image.png");
+  CU_ASSERT_EQUAL(entry.first_fat_table_record, 465416);
+}
+
+void test__deserialize_directory_entry_2() {
+  unsigned char serialized_entry[] = INITIALIZE(DIRECTORY_ENTRY_SIZE_IN_BYTES, 'X');
+
+  serialized_entry[0] = 'n';
+  serialized_entry[1] = 'a';
+  serialized_entry[2] = 'g';
+  serialized_entry[3] = 'h';
+  serialized_entry[4] = 'i';
+  serialized_entry[5] = 'b';
+  serialized_entry[6] = 'z';
+  serialized_entry[7] = 'a';
+  serialized_entry[8] = 'd';
+  serialized_entry[9] = 'e';
+  serialized_entry[10] = 'h';
+  serialized_entry[11] = '.';
+  serialized_entry[12] = 'm';
+  serialized_entry[13] = 'p';
+  serialized_entry[14] = '4';
+  serialized_entry[15] = '\000';
+  serialized_entry[16] = '\000';
+  serialized_entry[17] = '\000';
+  serialized_entry[18] = '\000';
+  serialized_entry[19] = '\000';
+  serialized_entry[20] = '\000';
+  serialized_entry[21] = 228;
+  serialized_entry[22] = 56;
+  serialized_entry[23] = 0;
+
+  const DirectoryEntry entry = deserialize_directory_entry(serialized_entry);
+  CU_ASSERT_STRING_EQUAL(entry.filename, "naghibzadeh.mp4");
+  CU_ASSERT_EQUAL(entry.first_fat_table_record, 14564);
+}
+
+void test__deserialize_directory_entry_3() {
+  unsigned char serialized_entry[] = INITIALIZE(DIRECTORY_ENTRY_SIZE_IN_BYTES, 'Z');
+
+  serialized_entry[0] = 's';
+  serialized_entry[1] = 'q';
+  serialized_entry[2] = 'a';
+  serialized_entry[3] = 'z';
+  serialized_entry[4] = 'e';
+  serialized_entry[5] = 'r';
+  serialized_entry[6] = 'y';
+  serialized_entry[7] = 'u';
+  serialized_entry[8] = ' ';
+  serialized_entry[9] = 'n';
+  serialized_entry[10] = 'v';
+  serialized_entry[11] = 'c';
+  serialized_entry[12] = ' ';
+  serialized_entry[13] = 'q';
+  serialized_entry[14] = 'j';
+  serialized_entry[15] = '4';
+  serialized_entry[16] = '.';
+  serialized_entry[17] = 'j';
+  serialized_entry[18] = 'p';
+  serialized_entry[19] = 'g';
+  serialized_entry[20] = '\000';
+  serialized_entry[21] = 230;
+  serialized_entry[22] = 121;
+  serialized_entry[23] = 6;
+
+  const DirectoryEntry entry = deserialize_directory_entry(serialized_entry);
+  CU_ASSERT_STRING_EQUAL(entry.filename, "sqazeryu nvc qj4.jpg");
+  CU_ASSERT_EQUAL(entry.first_fat_table_record, 424422);
+}
+
 int main(void) {
   CU_initialize_registry();
   CU_pSuite suite = CU_add_suite("Directory Library", 0, 0);
@@ -257,6 +355,9 @@ int main(void) {
   CU_add_test(suite, "Serialize Directory Entry", test__serialize_directory_entry_3);
   CU_add_test(suite, "Serialize Directory File", test__serialize_directory_file_1);
   CU_add_test(suite, "Serialize Directory File", test__serialize_directory_file_2);
+  CU_add_test(suite, "Deserialize Directory File", test__deserialize_directory_entry_1);
+  CU_add_test(suite, "Deserialize Directory File", test__deserialize_directory_entry_2);
+  CU_add_test(suite, "Deserialize Directory File", test__deserialize_directory_entry_3);
 
   CU_basic_set_mode(CU_BRM_VERBOSE);
   CU_basic_run_tests();

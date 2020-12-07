@@ -4,6 +4,7 @@
 #include <CUnit/Basic.h>
 #include <CUnit/CUnit.h>
 #include <stdbool.h>
+#include <string.h>
 
 void test__serialize_directory_entry_1() {
   const DirectoryEntry entry = {
@@ -21,20 +22,21 @@ void test__serialize_directory_entry_1() {
   CU_ASSERT_EQUAL(serialized_entry[6], 'p');
   CU_ASSERT_EQUAL(serialized_entry[7], 'n');
   CU_ASSERT_EQUAL(serialized_entry[8], 'g');
-  CU_ASSERT_EQUAL(serialized_entry[9], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[10], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[11], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[12], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[13], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[14], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[15], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[16], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[17], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[18], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[19], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[20], 8);
-  CU_ASSERT_EQUAL(serialized_entry[21], 26);
-  CU_ASSERT_EQUAL(serialized_entry[22], 7);
+  CU_ASSERT_EQUAL(serialized_entry[9], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[10], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[11], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[12], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[13], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[14], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[15], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[16], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[17], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[18], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[19], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[20], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[21], 8);
+  CU_ASSERT_EQUAL(serialized_entry[22], 26);
+  CU_ASSERT_EQUAL(serialized_entry[23], 7);
 }
 
 void test__serialize_directory_entry_2() {
@@ -59,14 +61,15 @@ void test__serialize_directory_entry_2() {
   CU_ASSERT_EQUAL(serialized_entry[12], 'm');
   CU_ASSERT_EQUAL(serialized_entry[13], 'p');
   CU_ASSERT_EQUAL(serialized_entry[14], '3');
-  CU_ASSERT_EQUAL(serialized_entry[15], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[16], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[17], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[18], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[19], ' ');
-  CU_ASSERT_EQUAL(serialized_entry[20], 94);
-  CU_ASSERT_EQUAL(serialized_entry[21], 108);
-  CU_ASSERT_EQUAL(serialized_entry[22], 10);
+  CU_ASSERT_EQUAL(serialized_entry[15], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[16], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[17], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[18], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[19], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[20], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[21], 94);
+  CU_ASSERT_EQUAL(serialized_entry[22], 108);
+  CU_ASSERT_EQUAL(serialized_entry[23], 10);
 }
 
 void test__serialize_directory_entry_3() {
@@ -96,19 +99,18 @@ void test__serialize_directory_entry_3() {
   CU_ASSERT_EQUAL(serialized_entry[17], 'm');
   CU_ASSERT_EQUAL(serialized_entry[18], 'p');
   CU_ASSERT_EQUAL(serialized_entry[19], '3');
-  CU_ASSERT_EQUAL(serialized_entry[20], 75);
-  CU_ASSERT_EQUAL(serialized_entry[21], 8);
-  CU_ASSERT_EQUAL(serialized_entry[22], 0);
+  CU_ASSERT_EQUAL(serialized_entry[20], '\000');
+  CU_ASSERT_EQUAL(serialized_entry[21], 75);
+  CU_ASSERT_EQUAL(serialized_entry[22], 8);
+  CU_ASSERT_EQUAL(serialized_entry[23], 0);
 }
 
 const short int SERIALIZED_DIRECTORY_FILE_IN_BYTES = ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES + 2 + 2;
 
 void test__serialize_directory_file_1() {
-  DirectoryEntry entries[0];
   const DirectoryFile file = {
     .capacity = ROOT_DIRECTORY_MAX_FILES,
     .length = 0,
-    .directory_entries = entries,
   };
   unsigned char output[] = INITIALIZE(SERIALIZED_DIRECTORY_FILE_IN_BYTES, 0);
 
@@ -128,11 +130,10 @@ void test__serialize_directory_file_2() {
     .filename = "naghibzadeh.mp4",
     .first_fat_table_record = 14564,
   };
-  DirectoryEntry entries[1] = {entry};
   const DirectoryFile file = {
     .capacity = ROOT_DIRECTORY_MAX_FILES,
     .length = 1,
-    .directory_entries = entries,
+    .directory_entries = {entry},
   };
   unsigned char output[] = INITIALIZE(SERIALIZED_DIRECTORY_FILE_IN_BYTES, 0);
 
@@ -158,14 +159,15 @@ void test__serialize_directory_file_2() {
   CU_ASSERT_EQUAL(output[16], 'm');
   CU_ASSERT_EQUAL(output[17], 'p');
   CU_ASSERT_EQUAL(output[18], '4');
-  CU_ASSERT_EQUAL(output[19], ' ');
-  CU_ASSERT_EQUAL(output[20], ' ');
-  CU_ASSERT_EQUAL(output[21], ' ');
-  CU_ASSERT_EQUAL(output[22], ' ');
-  CU_ASSERT_EQUAL(output[23], ' ');
-  CU_ASSERT_EQUAL(output[24], 228);
-  CU_ASSERT_EQUAL(output[25], 56);
-  CU_ASSERT_EQUAL(output[26], 0);
+  CU_ASSERT_EQUAL(output[19], '\000');
+  CU_ASSERT_EQUAL(output[20], '\000');
+  CU_ASSERT_EQUAL(output[21], '\000');
+  CU_ASSERT_EQUAL(output[22], '\000');
+  CU_ASSERT_EQUAL(output[23], '\000');
+  CU_ASSERT_EQUAL(output[24], '\000');
+  CU_ASSERT_EQUAL(output[25], 228);
+  CU_ASSERT_EQUAL(output[26], 56);
+  CU_ASSERT_EQUAL(output[27], 0);
 
   for (size_t i = 27; i < SERIALIZED_DIRECTORY_FILE_IN_BYTES; i++) {
     CU_ASSERT_EQUAL(output[i], 0);
@@ -181,11 +183,10 @@ void test__serialize_directory_file_3() {
     .filename = "file-test  +-x o.jpg",
     .first_fat_table_record = 684571,
   };
-  DirectoryEntry entries[2] = {entry_1, entry_2};
   const DirectoryFile file = {
     .capacity = ROOT_DIRECTORY_MAX_FILES,
     .length = 2,
-    .directory_entries = entries,
+    .directory_entries = {entry_1, entry_2},
   };
   unsigned char output[] = INITIALIZE(SERIALIZED_DIRECTORY_FILE_IN_BYTES, 0);
 

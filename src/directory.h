@@ -5,15 +5,15 @@
 
 typedef struct
 {
-  char *filename;
   FatTableEntry first_fat_table_record;
+  char filename[MAX_FILENAME_LENGTH + 1]; // 1 more byte for null-terminator
 } DirectoryEntry;
 
 typedef struct
 {
   short int capacity;
   short int length;
-  DirectoryEntry *directory_entries;
+  DirectoryEntry directory_entries[ROOT_DIRECTORY_MAX_FILES];
 } DirectoryFile;
 
 DirectoryFile load_directory_file();

@@ -21,13 +21,21 @@ cd simple-fat-fs
 
 If you do not have _git_, you can download repository from [here](https://github.com/xeptore/simple-fat-fs/archive/main.zip). Then extract the archive file and navigate to project's root directory.
 
-1. Run CMake in project's directory to generate `Makefile`
+3. Install a compiler:
+
+You can use any compiler you'd like, I personally prefer Clang, but you can use GCC if you'd like to.
+To download Clang go to [its official website](https://releases.llvm.org/download.html) and download the correct compiler for your operating system.
+If you are on Linux machine, you can install it, if it's not already installed, using your distribution package manager.
+
+4. Run CMake in project's directory to generate `Makefile`
 
 * Using command line:
 
 ```sh
 cmake -S . -B build
 ```
+
+If it throws error on failure to find compiler, change compiler path in CMakeLists.txt file via `CMAKE_C_COMPILER` variable value.
 
 * Using Graphical User Interface (GUI):
 <!-- TODO: Add screenshots -->

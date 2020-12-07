@@ -2,6 +2,8 @@
 #include "directory.h"
 #include "fat.h"
 #include "logger.h"
+#include "macros.h"
+#include "string.h"
 #include <stdio.h>
 
 void get_filename(char *output) {
@@ -9,8 +11,9 @@ void get_filename(char *output) {
     "Enter filename (%d-characters long, including extension): ",
     MAX_FILENAME_LENGTH
   );
-  char line[MAX_FILENAME_LENGTH] = {0};
+  char line[] = INITIALIZE(MAX_FILENAME_LENGTH + 1, '\000');
   scanf("%[^\n]", line);
+  strcpy(output, line);
 }
 
 int handle_new_filename(DirectoryFile *directory, FatTableEntry *fat_table) {
@@ -19,7 +22,7 @@ int handle_new_filename(DirectoryFile *directory, FatTableEntry *fat_table) {
     return 2;
   }
 
-  char filename[MAX_FILENAME_LENGTH] = {0};
+  char filename[] = INITIALIZE(MAX_FILENAME_LENGTH + 1, '\000');
   get_filename(filename);
   if (filename_exists_in_directory(directory, filename)) {
     fatal("Filename already exists.");
@@ -32,11 +35,11 @@ int handle_new_filename(DirectoryFile *directory, FatTableEntry *fat_table) {
     return 1;
   }
   update_fat_entires(fat_table, empty_entries);
-  const DirectoryEntry directory_entries = {
-    .filename = filename,
+  DirectoryEntry directory_entry = {
     .first_fat_table_record = empty_entries[0]
   };
-  insert_directory_entry(directory, &directory_entries);
+  strcpy(directory_entry.filename, filename);
+  insert_directory_entry(directory, &directory_entry);
   persist_directory(directory);
   persist_fat_table(fat_table);
 

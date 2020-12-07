@@ -1,6 +1,9 @@
 #include "directory.h"
 #include "constants.h"
+#include "fat.h"
+#include "macros.h"
 #include <stdio.h>
+#include <string.h>
 
 DirectoryEntry deserialize_directory_entry(
   const unsigned char *serialized_directory_entry
@@ -17,6 +20,23 @@ DirectoryEntry deserialize_directory_entry(
   };
   strcpy(entry.filename, (char *)serialized_directory_entry);
   return entry;
+}
+
+DirectoryFile deserialize_directory_file(
+  const unsigned char *serialized_directory_file
+) {
+  const unsigned char capacity = (unsigned char) deserialize_fat_entry(&serialized_directory_file[0]);
+  const unsigned char length = (unsigned char) deserialize_fat_entry(&serialized_directory_file[1]);
+
+  DirectoryFile directory = {
+    .capacity = capacity,
+    .length = length,
+  };
+  for (size_t i = 0; i < ROOT_DIRECTORY_MAX_FILES; i++) {
+    directory.directory_entries[i] = deserialize_directory_entry(&serialized_directory_file[2 + (i * DIRECTORY_ENTRY_SIZE_IN_BYTES)]);
+  }
+
+  return directory;
 }
 
 void serialize_directory_entry(

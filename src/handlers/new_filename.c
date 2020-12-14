@@ -6,7 +6,7 @@
 #include "string.h"
 #include <stdio.h>
 
-void get_filename(char *output) {
+void get_filename(char* output) {
   printf(
     "Enter filename (%d-characters long, including extension): ",
     MAX_FILENAME_LENGTH
@@ -16,7 +16,7 @@ void get_filename(char *output) {
   strcpy(output, line);
 }
 
-int handle_new_filename(DirectoryFile *directory, FatTableEntry *fat_table) {
+int handle_new_filename(DirectoryFile* directory, FatTableEntry* fat_table) {
   if (directory_is_full(directory)) {
     fatal("Directory does not have any space to store new file.");
     return 2;
@@ -29,7 +29,7 @@ int handle_new_filename(DirectoryFile *directory, FatTableEntry *fat_table) {
     return 1;
   }
 
-  FatTableEntry empty_entries[10] = {0};
+  FatTableEntry empty_entries[10] = { 0 };
   if (!try_get_ten_empty_entries(fat_table, empty_entries)) {
     fatal("No empty space left in FAT table.");
     return 1;

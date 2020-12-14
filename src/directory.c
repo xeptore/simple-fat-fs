@@ -6,7 +6,7 @@
 #include <string.h>
 
 DirectoryEntry deserialize_directory_entry(
-  const unsigned char *serialized_directory_entry
+  const unsigned char* serialized_directory_entry
 ) {
   const unsigned char fat_entry_buffer[3] = {
     serialized_directory_entry[DIRECTORY_ENTRY_SIZE_IN_BYTES - 3],
@@ -18,15 +18,15 @@ DirectoryEntry deserialize_directory_entry(
   DirectoryEntry entry = {
     .first_fat_table_record = fat_table_entry
   };
-  strcpy(entry.filename, (char *)serialized_directory_entry);
+  strcpy(entry.filename, (char*)serialized_directory_entry);
   return entry;
 }
 
 DirectoryFile deserialize_directory_file(
-  const unsigned char *serialized_directory_file
+  const unsigned char* serialized_directory_file
 ) {
-  const unsigned char capacity = (unsigned char) deserialize_fat_entry(&serialized_directory_file[0]);
-  const unsigned char length = (unsigned char) deserialize_fat_entry(&serialized_directory_file[1]);
+  const unsigned char capacity = (unsigned char)deserialize_fat_entry(&serialized_directory_file[0]);
+  const unsigned char length = (unsigned char)deserialize_fat_entry(&serialized_directory_file[1]);
 
   DirectoryFile directory = {
     .capacity = capacity,
@@ -40,10 +40,10 @@ DirectoryFile deserialize_directory_file(
 }
 
 void serialize_directory_entry(
-  const DirectoryEntry *entry,
-  unsigned char *output
+  const DirectoryEntry* entry,
+  unsigned char* output
 ) {
-  strcpy((char *)output, entry->filename);
+  strcpy((char*)output, entry->filename);
 
   unsigned char fat_table_entry_buffer[] = INITIALIZE(3, 0);
   serialize_fat_entry(entry->first_fat_table_record, fat_table_entry_buffer);
@@ -53,8 +53,8 @@ void serialize_directory_entry(
 }
 
 void serialize_directory_file(
-  const DirectoryFile *directory,
-  unsigned char *output
+  const DirectoryFile* directory,
+  unsigned char* output
 ) {
   unsigned char int_serialization_buffer[] = INITIALIZE(3, 0);
   serialize_fat_entry(directory->capacity, int_serialization_buffer);
@@ -72,16 +72,16 @@ void serialize_directory_file(
 }
 
 DirectoryFile load_directory_file() {
-  FILE *fp = fopen(DIRECTORY_FILENAME, "rb");
-  unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES] = {0};
+  FILE* fp = fopen(DIRECTORY_FILENAME, "rb");
+  unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES] = { 0 };
   fread(buffer, sizeof buffer, 1, fp);
   fclose(fp);
   return deserialize_directory_file(buffer);
 }
 
-void persist_directory(const DirectoryFile *directory) {
-  FILE *fp = fopen(DIRECTORY_FILENAME, "wb+");
-  unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES] = {0};
+void persist_directory(const DirectoryFile* directory) {
+  FILE* fp = fopen(DIRECTORY_FILENAME, "wb+");
+  unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES] = { 0 };
   serialize_directory_file(directory, buffer);
   fwrite(buffer, sizeof buffer, 1, fp);
   fclose(fp);
@@ -89,19 +89,19 @@ void persist_directory(const DirectoryFile *directory) {
 }
 
 void insert_directory_entry(
-  DirectoryFile *directory_file,
-  const DirectoryEntry *directory_entries
+  DirectoryFile* directory_file,
+  const DirectoryEntry* directory_entries
 ) {
   directory_file->directory_entries[directory_file->length++] = *directory_entries;
 }
 
-bool directory_is_full(const DirectoryFile *directory_file) {
+bool directory_is_full(const DirectoryFile* directory_file) {
   return directory_file->length == directory_file->capacity;
 }
 
 bool filename_exists_in_directory(
-  const DirectoryFile *directory,
-  const char *filename
+  const DirectoryFile* directory,
+  const char* filename
 ) {
   for (size_t i = 0; i < ROOT_DIRECTORY_MAX_FILES; i++) {
     if (directory->directory_entries[i].filename == filename) {

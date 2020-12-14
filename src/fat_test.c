@@ -97,7 +97,7 @@ void test__deserialize_fat_entry_executor(
   unsigned char serialized_2,
   FatTableEntry expected_entry
 ) {
-  unsigned char serialized_entry[3] = {serialized_0, serialized_1, serialized_2};
+  unsigned char serialized_entry[3] = { serialized_0, serialized_1, serialized_2 };
   const FatTableEntry deserialized_entry = deserialize_fat_entry(serialized_entry);
 
   CU_ASSERT_EQUAL(deserialized_entry, expected_entry);
@@ -177,7 +177,7 @@ void test__deserialize_fat_entry(void) {
 
 void test__update_fat_entires() {
   FatTableEntry fat_table[] = INITIALIZE(16, 0);
-  int empty_entries[10] = {0, 2, 4, 6, 7, 8, 9, 10, 13, 14};
+  int empty_entries[10] = { 0, 2, 4, 6, 7, 8, 9, 10, 13, 14 };
   update_fat_entires(fat_table, empty_entries);
   CU_ASSERT_EQUAL_FATAL(fat_table[0], 2);
   CU_ASSERT_EQUAL_FATAL(fat_table[2], 4);
@@ -199,9 +199,9 @@ void test__try_get_ten_empty_entries_should_work() {
   fat_table[9] = 11;
   fat_table[10] = 9;
   fat_table[11] = FAT_END_OF_FILE_ENTRY;
-  FatTableEntry empty_entries[10] = {0};
+  FatTableEntry empty_entries[10] = { 0 };
   const bool found = try_get_ten_empty_entries(fat_table, empty_entries);
-  const FatTableEntry expected_empty_entries[10] = {0,3,4,5,6,8,12,13,14,15};
+  const FatTableEntry expected_empty_entries[10] = { 0,3,4,5,6,8,12,13,14,15 };
   CU_ASSERT_TRUE(found);
   for (size_t i = 0; i < 0; i++)
   {
@@ -213,10 +213,10 @@ void test__try_get_ten_empty_entries_should_fail() {
   FatTableEntry fat_table[] = INITIALIZE(FAT_ENTRIES, FAT_EMPTY_ENTRY);
   for (size_t i = 0; i < FAT_ENTRIES - 1; i++)
   {
-    fat_table[i] = i+1;
+    fat_table[i] = i + 1;
   }
   fat_table[FAT_ENTRIES - 1] = FAT_END_OF_FILE_ENTRY;
-  FatTableEntry empty_entries[10] = {0};
+  FatTableEntry empty_entries[10] = { 0 };
   const bool found = try_get_ten_empty_entries(fat_table, empty_entries);
   CU_ASSERT_FALSE(found);
 }

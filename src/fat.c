@@ -1,5 +1,6 @@
 #include "fat.h"
 #include "constants.h"
+#include "macros.h"
 #include "logger.h"
 #include <stdio.h>
 
@@ -36,9 +37,9 @@ void load_fat_table(FatTableEntry* fat_table) {
   deserialize_fat_table(buffer, fat_table);
 }
 
-void persist_fat_table(const FatTableEntry *fat_table) {
-  FILE *fp = fopen(PARTITION_FILENAME, "wb+");
-  unsigned char buffer[FAT_ENTRIES] = {0};
+void persist_fat_table(const FatTableEntry* fat_table) {
+  FILE* fp = fopen(PARTITION_FILENAME, "wb+");
+  unsigned char buffer[] = INITIALIZE(FAT_ENTRIES * 3, '\000');
   serialize_fat_table(fat_table, buffer);
   fwrite(buffer, sizeof buffer, 1, fp);
   fclose(fp);

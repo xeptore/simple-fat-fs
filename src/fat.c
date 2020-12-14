@@ -28,9 +28,9 @@ void serialize_fat_table(const FatTableEntry* fat_table, unsigned char* output) 
   }
 }
 
-void load_fat_table(FatTableEntry *fat_table) {
-  FILE *fp = fopen(PARTITION_FILENAME, "rb");
-  unsigned char buffer[FAT_ENTRIES] = {0};
+void load_fat_table(FatTableEntry* fat_table) {
+  FILE* fp = fopen(PARTITION_FILENAME, "rb");
+  unsigned char buffer[] = INITIALIZE(FAT_ENTRIES * 3, '\000');
   fread(buffer, sizeof buffer, 1, fp);
   fclose(fp);
   deserialize_fat_table(buffer, fat_table);

@@ -5,8 +5,8 @@
 #define MAX_FILENAME_LENGTH 20
 #define FAT_ENTRY_SIZE_IN_BITS 20
 #define FAT_ENTRIES 1048576           // 2 ^ 20
-#define FAT_END_OF_FILE_ENTRY 1048577 // FAT_ENTRIES + 1
-#define FAT_EMPTY_ENTRY -1
+#define FAT_END_OF_FILE_ENTRY 1048577 // 2 ^ 20 + 1
+#define FAT_EMPTY_ENTRY 1048578 // 2 ^ 20 + 2
 // 20 bytes for filename
 // 1 byte for filename null terminator
 // 3 bytes for fat entry index

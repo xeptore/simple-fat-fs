@@ -23,8 +23,13 @@ void format_partition() {
   fclose(fp);
 }
 
-void format_directory_file(FILE *fp) {
-  char buffer[DIRECTORY_ENTRY_SIZE_IN_BYTES * ROOT_DIRECTORY_MAX_FILES] = {0};
+void format_directory_file(FILE* fp) {
+  const DirectoryFile directory_file = {
+    .capacity = ROOT_DIRECTORY_MAX_FILES,
+    .length = 0,
+  };
+  unsigned char buffer[DIRECTORY_ENTRY_SIZE_IN_BYTES * ROOT_DIRECTORY_MAX_FILES + 3 * 2] = { 0 };
+  serialize_directory_file(&directory_file, buffer);
   fwrite(buffer, sizeof buffer, 1, fp);
 }
 

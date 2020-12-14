@@ -4,13 +4,14 @@
 #include <stdio.h>
 
 FatTableEntry deserialize_fat_entry(const unsigned char* serialized_entry) {
-  return ((serialized_entry[0] << 0)) +
-         ((serialized_entry[1] << 8)) +
-         ((serialized_entry[2] << 16));
+  return
+    (serialized_entry[0] << 0) +
+    (serialized_entry[1] << 8) +
+    (serialized_entry[2] << 16);
 }
 
-void deserialize_fat_table(unsigned char *serialized, FatTableEntry *fat_table) {
-  for (size_t i = 0; i < FAT_ENTRIES; i++)  {
+void deserialize_fat_table(unsigned char* serialized, FatTableEntry* fat_table) {
+  for (size_t i = 0; i < FAT_ENTRIES; i++) {
     fat_table[i] = deserialize_fat_entry(&serialized[i * 3]);
   }
 }
@@ -21,8 +22,8 @@ void serialize_fat_entry(const FatTableEntry entry, unsigned char* output) {
   output[2] = (entry >> 16) % 256;
 }
 
-void serialize_fat_table(const FatTableEntry *fat_table, unsigned char *output) {
-  for (size_t i = 0; i < FAT_ENTRIES; i++)  {
+void serialize_fat_table(const FatTableEntry* fat_table, unsigned char* output) {
+  for (size_t i = 0; i < FAT_ENTRIES; i++) {
     serialize_fat_entry(fat_table[i], &output[3 * i]);
   }
 }
@@ -44,8 +45,8 @@ void persist_fat_table(const FatTableEntry *fat_table) {
 }
 
 void update_fat_entires(
-  FatTableEntry *fat_table,
-  const int *empty_entries
+  FatTableEntry* fat_table,
+  const int* empty_entries
 ) {
   for (size_t i = 0; i < 10; i++) {
     fat_table[empty_entries[i]] = empty_entries[i + 1];
@@ -54,8 +55,8 @@ void update_fat_entires(
 }
 
 bool try_get_ten_empty_entries(
-  const FatTableEntry *fat_table,
-  FatTableEntry *empty_entries
+  const FatTableEntry* fat_table,
+  FatTableEntry* empty_entries
 ) {
   size_t empty_entries_index = 0;
   for (size_t i = 0; i < FAT_ENTRIES; i++) {

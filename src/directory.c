@@ -104,7 +104,7 @@ bool filename_exists_in_directory(
   const char* filename
 ) {
   for (size_t i = 0; i < ROOT_DIRECTORY_MAX_FILES; i++) {
-    if (directory->directory_entries[i].filename == filename) {
+    if (strcmp(filename, directory->directory_entries[i].filename) == 0) {
       return true;
     }
   }

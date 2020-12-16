@@ -20,8 +20,11 @@ add_executable (_test_directory src/directory_test.c)
 target_link_libraries (_test_directory directory fat -lcunit)
 
 # adds libraries as the units of compilation
-add_library (handlers src/handlers.h src/handlers/new_filename.c)
-target_link_libraries (simple-fat handlers)
+add_library (data-area src/data_area.h src/data_area.c)
+target_link_libraries (simple-fat data-area)
+
+add_library (handlers src/handlers.h src/handlers/new_filename.c src/handlers/save_file.c)
+target_link_libraries (simple-fat handlers data-area)
 
 add_library (fat src/fat.h src/fat.c)
 target_link_libraries (simple-fat fat)

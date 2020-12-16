@@ -111,3 +111,15 @@ bool filename_exists_in_directory(
 
   return false;
 }
+
+FatTableEntry get_file_fat_first_entry(
+  const DirectoryFile* directory,
+  const char* filename
+) {
+  for (size_t i = 0; i < ROOT_DIRECTORY_MAX_FILES; i++) {
+    if (strcmp(filename, directory->directory_entries[i].filename) == 0) {
+      return directory->directory_entries[i].first_fat_table_record;
+    }
+  }
+  return -1;
+}

@@ -13,5 +13,5 @@
 // 3 bytes for fat entry index
 #define DIRECTORY_ENTRY_SIZE_IN_BYTES 24
 #define ROOT_DIRECTORY_MAX_FILES 32
-#define PARTITION_FILENAME "./partition.io"
-#define DIRECTORY_FILENAME "./directory.dir"
+#define PARTITION_FILENAME "./partition.bin"
+#define DIRECTORY_FILENAME "./directory.bin"

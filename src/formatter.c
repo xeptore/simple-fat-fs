@@ -24,7 +24,7 @@ void format_data_area(FILE* fp) {
 }
 
 void format_partition() {
-  FILE* fp = fopen(PARTITION_FILENAME, "wb+");
+  FILE* fp = fopen(PARTITION_FILENAME, "w+b");
   format_fat_area(fp);
   format_data_area(fp);
   fclose(fp);
@@ -41,7 +41,7 @@ void format_directory_file(FILE* fp) {
 }
 
 void format_directory() {
-  FILE* fp = fopen(DIRECTORY_FILENAME, "wb+");
+  FILE* fp = fopen(DIRECTORY_FILENAME, "w+b");
   format_directory_file(fp);
   fclose(fp);
 }

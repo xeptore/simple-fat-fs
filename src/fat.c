@@ -38,9 +38,10 @@ void load_fat_table(FatTableEntry* fat_table) {
 }
 
 void persist_fat_table(const FatTableEntry* fat_table) {
-  FILE* fp = fopen(PARTITION_FILENAME, "wb+");
+  FILE* fp = fopen(PARTITION_FILENAME, "r+b");
   unsigned char buffer[] = INITIALIZE(FAT_ENTRIES * 3, '\000');
   serialize_fat_table(fat_table, buffer);
+  fseek(fp, 0, SEEK_SET);
   fwrite(buffer, sizeof buffer, 1, fp);
   fclose(fp);
 }

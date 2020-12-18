@@ -39,3 +39,8 @@ bool filename_exists_in_directory(
   const DirectoryFile* directory,
   const char* filename
 );
+
+FatTableEntry get_file_fat_first_entry(
+  const DirectoryFile* directory,
+  const char* filename
+);

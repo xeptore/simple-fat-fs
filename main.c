@@ -14,9 +14,11 @@ int main() {
   // format_partition();
   // format_directory();
 
-  // FatTableEntry fat_table[FAT_ENTRIES] = {0};
-  // load_fat_table(fat_table);
+  FatTableEntry fat_table[FAT_ENTRIES] = {0};
+  load_fat_table(fat_table);
 
-  // DirectoryFile directory_file = load_directory_file();
-  // return handle_new_filename(&directory_file, fat_table);
+  DirectoryFile directory_file = load_directory_file();
+
+  return handle_new_filename(&directory_file, fat_table);
+  return handle_save_file(&directory_file, fat_table);
 }

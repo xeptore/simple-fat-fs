@@ -3,7 +3,7 @@
 
 void save_block(
   FILE* data_file,
-  int index,
+  const int index,
   const unsigned char* block_data
 ) {
   fpos_t before_seek_position;

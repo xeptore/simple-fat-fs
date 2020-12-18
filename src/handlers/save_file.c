@@ -7,10 +7,12 @@
 #include "string.h"
 #include <stdio.h>
 
+
+const unsigned short int MAXIMUM_SOURCE_FILE_PATH_LENGTH = 100;
+
 FILE* open_data_file() {
-  FILE* partition_file = fopen(PARTITION_FILENAME, "");
-  fseek(partition_file, 0L, SEEK_SET);
-  // fseek(partition_file, FAT_TABLE_SIZE_IN_BYTES, SEEK_SET);
+  FILE* partition_file = fopen(PARTITION_FILENAME, "r+b");
+  fseek(partition_file, FAT_TABLE_SIZE_IN_BYTES, SEEK_SET);
 
   return partition_file;
 }
@@ -30,9 +32,9 @@ void get_source_file_path(char* output) {
   // FIXME: clear input buffer
   printf(
     "Enter source file path (%d-characters long, including extension): ",
-    100
+    MAXIMUM_SOURCE_FILE_PATH_LENGTH
   );
-  char line[] = INITIALIZE(100 + 1, '\000');
+  char line[] = INITIALIZE(MAXIMUM_SOURCE_FILE_PATH_LENGTH + 1, '\000');
   scanf("%[^\n]", line);
   strcpy(output, line);
 }
@@ -98,7 +100,7 @@ int handle_save_file(DirectoryFile* directory, FatTableEntry* fat_table) {
     return 1;
   }
 
-  char source_file_path[] = INITIALIZE(101, '\000');
+  char source_file_path[] = INITIALIZE(MAXIMUM_SOURCE_FILE_PATH_LENGTH + 1, '\000');
   get_source_file_path(source_file_path);
   FILE* source_file = open_source_file(source_file_path);
 

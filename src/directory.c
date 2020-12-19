@@ -1,5 +1,6 @@
 #include "directory.h"
 #include "constants.h"
+#include "types.h"
 #include "fat.h"
 #include "macros.h"
 #include <stdio.h>

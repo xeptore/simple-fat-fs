@@ -30,6 +30,7 @@ add_library (handlers
   src/handlers/new_filename.c
   src/handlers/save_file.c
   src/handlers/save_new_file.c
+  src/handlers/restore_file.c
 )
 target_link_libraries (simple-fat handlers data-area)
 

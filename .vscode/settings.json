@@ -23,5 +23,7 @@
     40,
     60,
     80
-  ]
+  ],
+  "lldb.showDisassembly": "auto",
+  "lldb.dereferencePointers": true
 }

@@ -30,28 +30,6 @@ void get_source_file_path(char* output) {
   strcpy(output, line);
 }
 
-typedef struct {
-  FatTableEntry entries[10];
-} FileFatEntries;
-
-FileFatEntries read_file_fat_entries(
-  const DirectoryFile* directory,
-  const FatTableEntry* fat_table,
-  const char* filename
-) {
-  const FatTableEntry file_fat_table_first_entry = get_file_fat_first_entry(directory, filename);
-
-  FileFatEntries file_fat_entries;
-  file_fat_entries.entries[0] = file_fat_table_first_entry;
-
-  for (size_t i = 1; i < 10; i++)
-  {
-    file_fat_entries.entries[i] = fat_table[file_fat_entries.entries[i - 1]];
-  }
-
-  return file_fat_entries;
-}
-
 int handle_save_file(DirectoryFile* directory, FatTableEntry* fat_table) {
   FILE* data_file = open_data_file();
 
@@ -68,7 +46,8 @@ int handle_save_file(DirectoryFile* directory, FatTableEntry* fat_table) {
   get_source_file_path(source_file_path);
   FILE* source_file = open_source_file(source_file_path);
 
-  const FileFatEntries file_fat_entries = read_file_fat_entries(directory, fat_table, filename);
+  const FatTableEntry first_file_entry = get_file_fat_first_entry(directory, filename);
+  const FileFatEntries file_fat_entries = read_file_fat_entries_chain(first_file_entry, fat_table, filename);
   save_source_file(source_file, data_file, file_fat_entries.entries);
 
   fclose(source_file);

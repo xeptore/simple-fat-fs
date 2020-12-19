@@ -1,20 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include "constants.h"
-#include "fat.h"
-
-typedef struct
-{
-  FatTableEntry first_fat_table_record;
-  char filename[MAX_FILENAME_LENGTH + 1]; // 1 more byte for null-terminator
-} DirectoryEntry;
-
-typedef struct
-{
-  unsigned char capacity;
-  unsigned char length;
-  DirectoryEntry directory_entries[ROOT_DIRECTORY_MAX_FILES];
-} DirectoryFile;
+#include "types.h"
 
 DirectoryFile load_directory_file();
 

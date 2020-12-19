@@ -48,7 +48,7 @@ void persist_fat_table(const FatTableEntry* fat_table) {
 
 void update_fat_entires(
   FatTableEntry* fat_table,
-  const int* empty_entries
+  const FatTableEntry* empty_entries
 ) {
   for (size_t i = 0; i < 10; i++) {
     fat_table[empty_entries[i]] = empty_entries[i + 1];
@@ -73,4 +73,19 @@ bool try_get_ten_empty_entries(
     return false;
   }
   return true;
+}
+
+FileFatEntries read_file_fat_entries_chain(
+  const FatTableEntry first_entry,
+  const FatTableEntry* fat_table,
+  const char* filename
+) {
+  FileFatEntries file_fat_entries;
+  file_fat_entries.entries[0] = first_entry;
+
+  for (size_t i = 1; i < 10; i++) {
+    file_fat_entries.entries[i] = fat_table[file_fat_entries.entries[i - 1]];
+  }
+
+  return file_fat_entries;
 }

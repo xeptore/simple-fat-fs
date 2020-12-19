@@ -26,3 +26,16 @@ bool try_get_ten_empty_entries(
   const FatTableEntry* fat_table,
   FatTableEntry* empty_entries
 );
+
+// A container for file FAT entries array
+// to make returning the array copy-able.
+typedef struct {
+  FatTableEntry entries[10];
+} FileFatEntries;
+
+// Giving first entry in chain, it finds file FAT entries chain and returns them.
+FileFatEntries read_file_fat_entries_chain(
+  const FatTableEntry first_entry,
+  const FatTableEntry* fat_table,
+  const char* filename
+);

@@ -6,25 +6,18 @@
 #include "string.h"
 #include <stdio.h>
 
-void get_filename(char* output) {
-  printf(
-    "Enter filename (%d-characters long, including extension): ",
-    MAX_FILENAME_LENGTH
-  );
-  char line[] = INITIALIZE(MAX_FILENAME_LENGTH + 1, '\000');
-  scanf("%[^\n]", line);
-  strcpy(output, line);
-}
 
-int handle_new_filename(DirectoryFile* directory, FatTableEntry* fat_table) {
+int handle_new_filename(
+  DirectoryFile* directory,
+  FatTableEntry* fat_table,
+  const char* destination_file_name
+) {
   if (directory_is_full(directory)) {
     fatal("Directory does not have any space to store new file.");
     return 2;
   }
 
-  char filename[] = INITIALIZE(MAX_FILENAME_LENGTH + 1, '\000');
-  get_filename(filename);
-  if (filename_exists_in_directory(directory, filename)) {
+  if (filename_exists_in_directory(directory, destination_file_name)) {
     fatal("Filename already exists.");
     return 1;
   }
@@ -38,7 +31,7 @@ int handle_new_filename(DirectoryFile* directory, FatTableEntry* fat_table) {
   DirectoryEntry directory_entry = {
     .first_fat_table_record = empty_entries[0]
   };
-  strcpy(directory_entry.filename, filename);
+  strcpy(directory_entry.filename, destination_file_name);
   insert_directory_entry(directory, &directory_entry);
   persist_directory(directory);
   persist_fat_table(fat_table);

@@ -3,12 +3,23 @@
 #include "data_area.h"
 #include "macros.h"
 #include "handlers.h"
+#include <errno.h>
 #include <string.h>
 
 const unsigned short int MAXIMUM_DESTINATION_FILE_PATH_LENGTH = 100U;
 
 FILE* open_destination_file(const char* destination_file_path) {
   FILE* file = fopen(destination_file_path, "w+b");
+  if (file == NULL) {
+    sprintf(
+      stderr,
+      "Error opening file '%s': %s\n",
+      destination_file_path,
+      strerror(errno)
+    );
+    exit(errno);
+  }
+
   return file;
 }
 

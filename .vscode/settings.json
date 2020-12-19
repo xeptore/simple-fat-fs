@@ -5,7 +5,10 @@
     "tuple": "c",
     "*.tcc": "cpp",
     "iomanip": "cpp",
-    "*.inc": "cpp"
+    "*.inc": "cpp",
+    "typeinfo": "c",
+    "atomic": "c",
+    "vector": "c"
   },
   "C_Cpp.autocomplete": "Default",
   "C_Cpp.clang_format_style": "file",

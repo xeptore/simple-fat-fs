@@ -27,10 +27,10 @@ add_library (handlers
   src/handlers.h
   src/handlers/utilities.h
   src/handlers/utilities.c
-  src/handlers/new_filename.c
-  src/handlers/save_file.c
-  src/handlers/save_new_file.c
-  src/handlers/restore_file.c
+  src/handlers/reserve.c
+  src/handlers/store_reserved.c
+  src/handlers/store.c
+  src/handlers/restore.c
 )
 target_link_libraries (simple-fat handlers data-area)
 

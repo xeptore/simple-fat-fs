@@ -18,5 +18,10 @@
     "source.organizeImports": true
   },
   "cmake.clearOutputBeforeBuild": true,
-  "cmake.saveBeforeBuild": true
+  "cmake.saveBeforeBuild": true,
+  "editor.rulers": [
+    40,
+    60,
+    80
+  ]
 }

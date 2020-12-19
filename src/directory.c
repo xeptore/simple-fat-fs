@@ -73,15 +73,15 @@ void serialize_directory_file(
 
 DirectoryFile load_directory_file() {
   FILE* fp = fopen(DIRECTORY_FILENAME, "rb");
-  unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES] = { 0 };
+  unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES + 3 * 2] = { 0 };
   fread(buffer, sizeof buffer, 1, fp);
   fclose(fp);
   return deserialize_directory_file(buffer);
 }
 
 void persist_directory(const DirectoryFile* directory) {
-  FILE* fp = fopen(DIRECTORY_FILENAME, "wb+");
-  unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES] = { 0 };
+  FILE* fp = fopen(DIRECTORY_FILENAME, "w+b");
+  unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES + 3 * 2] = { 0 };
   serialize_directory_file(directory, buffer);
   fwrite(buffer, sizeof buffer, 1, fp);
   fclose(fp);

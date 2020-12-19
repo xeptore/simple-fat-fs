@@ -8,8 +8,8 @@
 #include <string.h>
 
 int handle_store(
-  DirectoryFile *directory,
-  FatTableEntry *fat_table,
+  DirectoryFile* directory,
+  FatTableEntry* fat_table,
   StoreArgs* args
 ) {
   if (directory_is_full(directory)) {
@@ -28,7 +28,7 @@ int handle_store(
     return 1;
   }
 
-  FatTableEntry empty_entries[10] = {0};
+  FatTableEntry empty_entries[10] = { 0 };
   if (!try_get_ten_empty_entries(fat_table, empty_entries)) {
     fatal("No empty space left in FAT table.");
     return 1;
@@ -36,14 +36,14 @@ int handle_store(
   update_fat_entires(fat_table, empty_entries);
   persist_fat_table(fat_table);
 
-  DirectoryEntry directory_entry = {.first_fat_table_record = empty_entries[0]};
+  DirectoryEntry directory_entry = { .first_fat_table_record = empty_entries[0] };
   strcpy(directory_entry.filename, args->destination_file_name);
   insert_directory_entry(directory, &directory_entry);
   persist_directory(directory);
 
-  FILE *source_file = open_source_file(args->source_file_path);
+  FILE* source_file = open_source_file(args->source_file_path);
 
-  FILE *data_file = open_data_file();
+  FILE* data_file = open_data_file();
   save_source_file(source_file, data_file, empty_entries);
 
   fclose(source_file);

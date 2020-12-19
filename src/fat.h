@@ -13,7 +13,7 @@ void load_fat_table(FatTableEntry* fat_table);
 // Persists fat table onto partition on disk.
 void persist_fat_table(const FatTableEntry* fat_table);
 
-// Appplies `empty_entires` chain to `fat_table`.
+// Applies `empty_entires` chain to `fat_table`.
 void update_fat_entires(
   FatTableEntry* fat_table,
   const FatTableEntry* empty_entries

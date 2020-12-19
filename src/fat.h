@@ -1,8 +1,7 @@
 #pragma once
 #include <stdbool.h>
 #include "logger.h"
-
-typedef int FatTableEntry;
+#include "types.h"
 
 void serialize_fat_entry(const FatTableEntry entry, unsigned char* output);
 

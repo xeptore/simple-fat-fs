@@ -177,7 +177,7 @@ void test__deserialize_fat_entry(void) {
 
 void test__update_fat_entires() {
   FatTableEntry fat_table[] = INITIALIZE(16, 0);
-  int empty_entries[10] = { 0, 2, 4, 6, 7, 8, 9, 10, 13, 14 };
+  const FatTableEntry empty_entries[10] = { 0, 2, 4, 6, 7, 8, 9, 10, 13, 14 };
   update_fat_entires(fat_table, empty_entries);
   CU_ASSERT_EQUAL_FATAL(fat_table[0], 2);
   CU_ASSERT_EQUAL_FATAL(fat_table[2], 4);

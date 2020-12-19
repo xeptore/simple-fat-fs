@@ -6,8 +6,7 @@
 #include "string.h"
 #include <stdio.h>
 
-
-int handle_new_filename(
+int handle_reserve(
   DirectoryFile* directory,
   FatTableEntry* fat_table,
   const char* destination_file_name

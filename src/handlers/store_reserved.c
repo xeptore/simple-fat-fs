@@ -9,7 +9,7 @@
 #include "handlers.h"
 #include <stdio.h>
 
-int handle_save_file(
+int handle_store_reserved(
   DirectoryFile* directory,
   FatTableEntry* fat_table,
   StoreReservedArgs* args

@@ -4,12 +4,10 @@
 #include "formatter.h"
 #include "handlers.h"
 #include "logger.h"
-#include "validator.c"
-#include "parser.c"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 const char* USAGE_MESSAGE = "\
   Usage:\
@@ -39,13 +37,11 @@ void print_usage_message_and_exit() {
 }
 
 bool validate_command(char* cmd) {
-  if (
-    strcmp("partition", cmd) == 0 ||
+  if (strcmp("partition", cmd) == 0 ||
     strcmp("reserve", cmd) == 0 ||
     strcmp("store-reserved", cmd) == 0 ||
     strcmp("store", cmd) == 0 ||
-    strcmp("restore", cmd) == 0
-    ) {
+    strcmp("restore", cmd) == 0) {
     return true;
   }
   return false;
@@ -56,10 +52,8 @@ bool validate_reserve_command_args(unsigned int argc, char* argv[]) {
     return false;
   }
   const char* option = argv[2];
-  if (
-    strcmp(option, "-d") != 0 &&
-    strcmp(option, "--destination-file-name") != 0
-    ) {
+  if (strcmp(option, "-d") != 0 &&
+    strcmp(option, "--destination-file-name") != 0) {
     return false;
   }
   const char* value = argv[3];
@@ -74,10 +68,8 @@ bool validate_store_reserve_command_args(unsigned int argc, char* argv[]) {
     return false;
   }
   const char* d_option = argv[2];
-  if (
-    strcmp(d_option, "-d") != 0 &&
-    strcmp(d_option, "--destination-file-name") != 0
-    ) {
+  if (strcmp(d_option, "-d") != 0 &&
+    strcmp(d_option, "--destination-file-name") != 0) {
     return false;
   }
   const char* d_value = argv[3];
@@ -85,10 +77,8 @@ bool validate_store_reserve_command_args(unsigned int argc, char* argv[]) {
     return false;
   }
   const char* s_option = argv[4];
-  if (
-    strcmp(s_option, "-s") != 0 &&
-    strcmp(s_option, "--source-file-path") != 0
-    ) {
+  if (strcmp(s_option, "-s") != 0 &&
+    strcmp(s_option, "--source-file-path") != 0) {
     return false;
   }
   const char* s_value = argv[5];
@@ -104,10 +94,8 @@ bool validate_store_command_args(unsigned int argc, char* argv[]) {
     return false;
   }
   const char* d_option = argv[2];
-  if (
-    strcmp(d_option, "-d") != 0 &&
-    strcmp(d_option, "--destination-file-name") != 0
-    ) {
+  if (strcmp(d_option, "-d") != 0 &&
+    strcmp(d_option, "--destination-file-name") != 0) {
     return false;
   }
   const char* d_value = argv[3];
@@ -115,10 +103,8 @@ bool validate_store_command_args(unsigned int argc, char* argv[]) {
     return false;
   }
   const char* s_option = argv[4];
-  if (
-    strcmp(s_option, "-s") != 0 &&
-    strcmp(s_option, "--source-file-path") != 0
-    ) {
+  if (strcmp(s_option, "-s") != 0 &&
+    strcmp(s_option, "--source-file-path") != 0) {
     return false;
   }
   const char* s_value = argv[5];
@@ -134,10 +120,8 @@ bool validate_restore_command_args(unsigned int argc, char* argv[]) {
     return false;
   }
   const char* d_option = argv[2];
-  if (
-    strcmp(d_option, "-d") != 0 &&
-    strcmp(d_option, "--destination-file-path") != 0
-    ) {
+  if (strcmp(d_option, "-d") != 0 &&
+    strcmp(d_option, "--destination-file-path") != 0) {
     return false;
   }
   const char* d_value = argv[3];
@@ -146,10 +130,8 @@ bool validate_restore_command_args(unsigned int argc, char* argv[]) {
     return false;
   }
   const char* s_option = argv[4];
-  if (
-    strcmp(s_option, "-s") != 0 &&
-    strcmp(s_option, "--source-file-name") != 0
-    ) {
+  if (strcmp(s_option, "-s") != 0 &&
+    strcmp(s_option, "--source-file-name") != 0) {
     return false;
   }
   const char* s_value = argv[5];
@@ -200,7 +182,6 @@ StoreReservedArgs parse_store_reserve_arg(char** argv) {
   return args;
 }
 
-
 StoreArgs parse_store_arg(char** argv) {
   StoreArgs args;
   strcpy(args.source_file_path, argv[5]);
@@ -242,11 +223,7 @@ int main(int argc, char** argv) {
       print_usage_message_and_exit();
     }
     char* destination_file_name = parse_reserve_arg(argv);
-    const int result = handle_new_filename(
-      &directory_file,
-      fat_table,
-      destination_file_name
-    );
+    const int result = handle_reserve(&directory_file, fat_table, destination_file_name);
     free(destination_file_name);
     return result;
   }
@@ -255,32 +232,21 @@ int main(int argc, char** argv) {
       print_usage_message_and_exit();
     }
     StoreReservedArgs args = parse_store_reserve_arg(argv);
-    return handle_save_file(
-      &directory_file,
-      fat_table,
-      &args
-    );}
+    return handle_store_reserved(&directory_file, fat_table, &args);
+  }
   case Store: {
     if (!validate_store_command_args(argc, argv)) {
       print_usage_message_and_exit();
     }
     StoreArgs args = parse_store_arg(argv);
-    return handle_save_new_file(
-      &directory_file,
-      fat_table,
-      &args
-    );
+    return handle_store(&directory_file, fat_table, &args);
   }
   case Restore: {
     if (!validate_restore_command_args(argc, argv)) {
       print_usage_message_and_exit();
     }
     const RestoreArgs args = parse_restore_arg(argv);
-    return handle_restore_file(
-      &directory_file,
-      fat_table,
-      &args
-    );
+    return handle_restore(&directory_file, fat_table, &args);
   }
   default:
     fprintf(stderr, "How did you reach here?!");

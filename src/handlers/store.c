@@ -7,7 +7,7 @@
 #include "handlers.h"
 #include <string.h>
 
-int handle_save_new_file(
+int handle_store(
   DirectoryFile *directory,
   FatTableEntry *fat_table,
   StoreArgs* args

@@ -24,7 +24,7 @@ void restore_file(
   }
 }
 
-int handle_restore_file(
+int handle_restore(
   DirectoryFile* directory,
   FatTableEntry* fat_table,
   const RestoreArgs* args

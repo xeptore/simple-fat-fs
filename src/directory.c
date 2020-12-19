@@ -74,6 +74,13 @@ void serialize_directory_file(
 
 DirectoryFile load_directory_file() {
   FILE* fp = fopen(DIRECTORY_FILENAME, "rb");
+  if (fp == NULL) {
+    sprintf(
+      stderr,
+      "Error opening directory file. Try partitioning again.\n"
+    );
+    exit(errno);
+  }
   unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES + 3 * 2] = { 0 };
   fread(buffer, sizeof buffer, 1, fp);
   fclose(fp);
@@ -82,6 +89,13 @@ DirectoryFile load_directory_file() {
 
 void persist_directory(const DirectoryFile* directory) {
   FILE* fp = fopen(DIRECTORY_FILENAME, "w+b");
+  if (fp == NULL) {
+    sprintf(
+      stderr,
+      "Error opening directory file. Try partitioning again.\n"
+    );
+    exit(errno);
+  }
   unsigned char buffer[ROOT_DIRECTORY_MAX_FILES * DIRECTORY_ENTRY_SIZE_IN_BYTES + 3 * 2] = { 0 };
   serialize_directory_file(directory, buffer);
   fwrite(buffer, sizeof buffer, 1, fp);

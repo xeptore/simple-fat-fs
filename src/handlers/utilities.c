@@ -7,9 +7,16 @@
 const unsigned short int MAXIMUM_SOURCE_FILE_PATH_LENGTH = 100U;
 
 FILE* open_source_file(char* source_file_path) {
-  // TODO: Check whether file exists or not
-  // TODO: Also check for any errors may occur during opening process
   FILE* source_file = fopen(source_file_path, "rb");
+  if (source_file == NULL) {
+    sprintf(
+      stderr,
+      "Error opening file '%s': %s\n",
+      source_file_path,
+      strerror(errno)
+    );
+    exit(errno);
+  }
   return source_file;
 }
 

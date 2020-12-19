@@ -1,6 +1,13 @@
 #include "constants.h"
 #include <stdio.h>
 
+FILE* open_data_file() {
+  FILE* partition_file = fopen(PARTITION_FILENAME, "r+b");
+  fseek(partition_file, FAT_TABLE_SIZE_IN_BYTES, SEEK_SET);
+
+  return partition_file;
+}
+
 void save_block(
   FILE* data_file,
   const int index,

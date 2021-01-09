@@ -10,7 +10,7 @@
 FILE* open_destination_file(const char* destination_file_path) {
   FILE* file = fopen(destination_file_path, "w+b");
   if (file == NULL) {
-    sprintf(
+    fprintf(
       stderr,
       "Error opening file '%s': %s\n",
       destination_file_path,

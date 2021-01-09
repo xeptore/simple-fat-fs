@@ -4,14 +4,13 @@
 #include "macros.h"
 #include "handlers.h"
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
-
-const unsigned short int MAXIMUM_DESTINATION_FILE_PATH_LENGTH = 100U;
 
 FILE* open_destination_file(const char* destination_file_path) {
   FILE* file = fopen(destination_file_path, "w+b");
   if (file == NULL) {
-    sprintf(
+    fprintf(
       stderr,
       "Error opening file '%s': %s\n",
       destination_file_path,

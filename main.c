@@ -16,19 +16,19 @@ const char* USAGE_MESSAGE = "\
 \n    partition        = Creates partition.bin and directory.bin files in current working directory. Overwrites if already exists.\
 \n\
 \n    reserve          = Reserves 10 blocks for <destination-file-name> in FAT table.\
-\n      -d, --destination-file-name <destination-file-name>\
+\n      -d, --destination-file-name <destination-file-name> (20-characters maximum)\
 \n\
 \n    store-reserved   = Stores <source-file-absolute-path> in file system. <destination-file-name> file must already exists, otherwise error occurs.\
-\n      -d, --destination-file-name <destination-file-name>\
-\n      -s, --source-file-path <source-file-absolute-path>\
+\n      -d, --destination-file-name <destination-file-name> (20-characters maximum)\
+\n      -s, --source-file-path <source-file-absolute-path> (100-characters maximum)\
 \n\
 \n    store            = Executes `reserve` and `store-reserved` in one command.\
-\n      -d, --destination-file-name <destination-file-name>\
-\n      -s, --source-file-path <source-file-absolute-path>\
+\n      -d, --destination-file-name <destination-file-name> (20-characters maximum)\
+\n      -s, --source-file-path <source-file-absolute-path> (100-characters maximum)\
 \n\
 \n    restore          = Restores <source-file-name> from file system and copies its data to <destination-file-absolute-path> on host machine's file system.\
-\n      -d, --destination-file-path <destination-file-absolute-path>\
-\n      -s, --source-file-name <source-file-name>\
+\n      -d, --destination-file-path <destination-file-absolute-path> (100-characters maximum)\
+\n      -s, --source-file-name <source-file-name> (20-characters maximum)\
 ";
 
 void print_usage_message_and_exit() {

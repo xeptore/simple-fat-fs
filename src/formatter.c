@@ -28,7 +28,7 @@ void format_data_area(FILE* fp) {
 void format_partition() {
   FILE* fp = fopen(PARTITION_FILENAME, "w+b");
   if (fp == NULL) {
-    sprintf(
+    fprintf(
       stderr,
       "Error opening partition file (%s). Try partitioning again.\n",
       PARTITION_FILENAME
@@ -53,7 +53,7 @@ void format_directory_file(FILE* fp) {
 void format_directory() {
   FILE* fp = fopen(DIRECTORY_FILENAME, "w+b");
   if (fp == NULL) {
-    sprintf(
+    fprintf(
       stderr,
       "Error opening directory file (%s). Try partitioning again.\n",
       DIRECTORY_FILENAME

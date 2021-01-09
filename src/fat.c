@@ -34,7 +34,7 @@ void serialize_fat_table(const FatTableEntry* fat_table, unsigned char* output) 
 void load_fat_table(FatTableEntry* fat_table) {
   FILE* fp = fopen(PARTITION_FILENAME, "rb");
   if (fp == NULL) {
-    sprintf(
+    fprintf(
       stderr,
       "Error opening partition file. Try partitioning again.\n"
     );
@@ -49,7 +49,7 @@ void load_fat_table(FatTableEntry* fat_table) {
 void persist_fat_table(const FatTableEntry* fat_table) {
   FILE* fp = fopen(PARTITION_FILENAME, "r+b");
   if (fp == NULL) {
-    sprintf(
+    fprintf(
       stderr,
       "Error opening partition file. Try partitioning again.\n"
     );

@@ -77,7 +77,7 @@ void serialize_directory_file(
 DirectoryFile load_directory_file() {
   FILE* fp = fopen(DIRECTORY_FILENAME, "rb");
   if (fp == NULL) {
-    sprintf(
+    fprintf(
       stderr,
       "Error opening directory file. Try partitioning again.\n"
     );
@@ -92,7 +92,7 @@ DirectoryFile load_directory_file() {
 void persist_directory(const DirectoryFile* directory) {
   FILE* fp = fopen(DIRECTORY_FILENAME, "w+b");
   if (fp == NULL) {
-    sprintf(
+    fprintf(
       stderr,
       "Error opening directory file. Try partitioning again.\n"
     );

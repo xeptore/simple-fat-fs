@@ -3,6 +3,8 @@
 #include "types.h"
 #include "fat.h"
 #include "macros.h"
+#include <errno.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 

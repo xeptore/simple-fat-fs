@@ -2,6 +2,8 @@
 #include "constants.h"
 #include "macros.h"
 #include "logger.h"
+#include <errno.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 FatTableEntry deserialize_fat_entry(const unsigned char* serialized_entry) {

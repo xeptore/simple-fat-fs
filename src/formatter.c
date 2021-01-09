@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
 #include "constants.h"
 #include "macros.h"
 #include "formatter.h"

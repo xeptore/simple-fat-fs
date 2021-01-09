@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <stdlib.h>
 #include "fat.h"
 #include "constants.h"
 #include "macros.h"
